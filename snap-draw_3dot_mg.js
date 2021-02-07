@@ -201,6 +201,7 @@ jsPsych.plugins["snap-draw"] = (function () {
 
             // the angles for the wedge on the circle
             const degStart = trial.angle;
+            const degStim = degStart + (trial.wedge_degrees * trial.condition)
             const degEnd = degStart + trial.wedge_degrees;
 
             // compute the coordinates (in cartesian coordinate system) of the two points on
@@ -216,7 +217,8 @@ jsPsych.plugins["snap-draw"] = (function () {
             const yStim = Snap.cos(stimulusDegrees) * R * scale_factor;
 
             // record the position of the stimulus
-            trial.stimulus = { x: [x1, xStim, x2], y: [y1, yStim, y2] };
+            // trial.stimulus = { x: [x1, xStim, x2], y: [y1, yStim, y2] };
+            trial.stimulus = { x: [x1, xStim, x2], y: [y1, yStim, y2], deg: [degStart, degStim, degEnd] };
 
             // the stimulus point, as a filled circle/dot of radius 3.
             const dotStimulus = s.circle(xStim, yStim, 3 * scale_factor);
@@ -447,6 +449,7 @@ jsPsych.plugins["snap-draw"] = (function () {
                     y: y,
                     cx: point[0],// the calculated position on the circle
                     cy: point[1],
+                    deg: math.atan(point[1] / point[0]) * (180 / math.pi),
                     timeInterval: clickTime - startingTime // RT: response time
                 };
 
@@ -622,6 +625,7 @@ jsPsych.plugins["snap-draw"] = (function () {
                     'errSq': error,
                     'stimulus_x': trial.stimulus.x,
                     'stimulus_y': trial.stimulus.y,
+                    'stimulus_deg': trial.stimulus.deg,
                     'dot_to_guess': trial.dot_to_guess,
                     'width': trial.width,
                     'height': trial.height,
