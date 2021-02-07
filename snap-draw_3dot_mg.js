@@ -449,7 +449,7 @@ jsPsych.plugins["snap-draw"] = (function () {
                     y: y,
                     cx: point[0],// the calculated position on the circle
                     cy: point[1],
-                    deg: math.atan(point[1] / point[0]) * (180 / math.pi),
+                    deg: Math.atan(point[1] / point[0]) * (180 / Math.PI),
                     timeInterval: clickTime - startingTime // RT: response time
                 };
 
